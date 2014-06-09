@@ -1,0 +1,71 @@
+SQL> select a_id from A where c_key in
+  2     (select c_id from C where b_key in
+  3             (select b_id from B where a_key = 1));
+
+      A_ID
+----------
+         4
+
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 2997213843
+
+--------------------------------------------------------------------------------
+
+-
+
+| Id  | Operation            | Name     | Rows  | Bytes | Cost (%CPU)| Time
+|
+
+--------------------------------------------------------------------------------
+
+-
+
+|   0 | SELECT STATEMENT     |          |     1 |    25 | 38437   (2)| 00:07:42
+|
+
+|*  1 |  HASH JOIN RIGHT SEMI|          |     1 |    25 | 38437   (2)| 00:07:42
+|
+
+|   2 |   VIEW               | VW_NSO_1 |     1 |    13 | 25617   (2)| 00:05:08
+|
+
+|*  3 |    HASH JOIN         |          |     1 |    24 | 25617   (2)| 00:05:08
+|
+
+|*  4 |     TABLE ACCESS FULL| B        |     1 |    12 | 12796   (2)| 00:02:34
+|
+
+|   5 |     TABLE ACCESS FULL| C        |  6864K|    78M| 12772   (1)| 00:02:34
+|
+
+|   6 |   TABLE ACCESS FULL  | A        |  6848K|    78M| 12772   (1)| 00:02:34
+|
+
+--------------------------------------------------------------------------------
+
+-
+
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - access("C_KEY"="C_ID")
+   3 - access("B_KEY"="B_ID")
+   4 - filter("A_KEY"=1)
+
+
+Statistics
+----------------------------------------------------------
+          2  recursive calls
+          1  db block gets
+     693050  consistent gets
+     692570  physical reads
+        176  redo size
+        522  bytes sent via SQL*Net to client
+        519  bytes received via SQL*Net from client
+          2  SQL*Net roundtrips to/from client
+          0  sorts (memory)
+          0  sorts (disk)
+          1  rows processed

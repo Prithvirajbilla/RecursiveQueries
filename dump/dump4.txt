@@ -1,0 +1,65 @@
+SQL> SELECT plan_table_output from table(dbms_xplan.display('plan_table',null,'typical'));
+
+PLAN_TABLE_OUTPUT
+--------------------------------------------------------------------------------
+Plan hash value: 3322303003
+
+--------------------------------------------------------------------------------
+-----
+
+| Id  | Operation                    | Name | Rows  | Bytes | Cost (%CPU)| Time
+    |
+
+--------------------------------------------------------------------------------
+-----
+
+
+PLAN_TABLE_OUTPUT
+--------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT             |      |    34M|  5443M|   448K (86)| 01:29
+:46 |
+
+|*  1 |  FILTER                      |      |       |       |            |
+    |
+
+|   2 |   TABLE ACCESS FULL          | C    |    34M|   391M| 65135   (2)| 00:13
+:02 |
+
+|*  3 |   TABLE ACCESS FULL          | B    |     1 |    12 | 64962   (2)| 00:13
+:00 |
+
+PLAN_TABLE_OUTPUT
+--------------------------------------------------------------------------------
+
+|*  4 |  CONNECT BY WITHOUT FILTERING|      |       |       |            |
+    |
+
+|   5 |   TABLE ACCESS BY INDEX ROWID| A    |     1 |    44 |     3   (0)| 00:00
+:01 |
+
+|*  6 |    INDEX UNIQUE SCAN         | A_PK |     1 |       |     2   (0)| 00:00
+:01 |
+
+|   7 |   TABLE ACCESS FULL          | A    |    34M|  1434M| 65014   (1)| 00:13
+
+PLAN_TABLE_OUTPUT
+--------------------------------------------------------------------------------
+:01 |
+
+--------------------------------------------------------------------------------
+-----
+
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - filter("B_KEY"= (SELECT "B_ID" FROM "B" "B" WHERE "A_KEY"=:B1))
+   3 - filter("A_KEY"=:B1)
+
+PLAN_TABLE_OUTPUT
+--------------------------------------------------------------------------------
+   4 - access( (SELECT "C_ID" FROM "C" "C" WHERE "B_KEY"= (SELECT "B_ID"
+              FROM "B" "B" WHERE "A_KEY"=:B1))=PRIOR "A"."C_KEY")
+   6 - access("A_ID"=10)
+
+23 rows selected.

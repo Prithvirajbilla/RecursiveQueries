@@ -1,0 +1,80 @@
+select * from A connect by prior c_key =
+  (select c_id from C where b_key = (select b_id from B where a_key = a_id)) 
+  start with a_id = 20;
+
+      A_ID A_NAME
+---------- --------------------
+A_DETAILS
+--------------------------------------------------------------------------------
+
+     C_KEY
+----------
+  34180197 h4t0hd7jhp5v4pb
+ubouy78lmuj305o
+  34180196
+
+
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 2621985810
+
+--------------------------------------------------------------------------------
+
+------
+
+| Id  | Operation                     | Name | Rows  | Bytes | Cost (%CPU)| Time     |
+
+--------------------------------------------------------------------------------
+
+------
+
+|   0 | SELECT STATEMENT              |      |  6848K|  1090M| 89619  (86)| 00:17:56 |
+
+|*  1 |  CONNECT BY WITHOUT FILTERING |      |       |       |            |          |
+
+|   2 |   TABLE ACCESS BY INDEX ROWID | A    |     1 |    44 |     3   (0)| 00:00:01 |
+
+|*  3 |    INDEX UNIQUE SCAN          | A_PK |     1 |       |     2   (0)| 00:00:01 |
+
+|   4 |   TABLE ACCESS FULL           | A    |  6848K|   287M| 12772   (1)| 00:02:34 |
+
+|   5 |   NESTED LOOPS                |      |     1 |    24 |     5   (0)| 00:00:01 |
+
+|   6 |    TABLE ACCESS BY INDEX ROWID| C    |     1 |    12 |     3   (0)| 00:00:01 |
+
+|*  7 |     INDEX UNIQUE SCAN         | C_PK |     1 |       |     2   (0)| 00:00:01 |
+
+|*  8 |    TABLE ACCESS BY INDEX ROWID| B    |     1 |    12 |     2   (0)| 00:00:01 |
+
+|*  9 |     INDEX UNIQUE SCAN         | B_PK |     1 |       |     1   (0)| 00:00:01 |
+
+--------------------------------------------------------------------------------
+
+------
+
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - filter( EXISTS (SELECT 0 FROM "C" "C","B" "B" WHERE "B_KEY"="B_ID" AND
+              "A_KEY"=:B1 AND "C_ID"=:B2))
+   3 - access("A_ID"=34180197)
+   7 - access("C_ID"=:B1)
+   8 - filter("A_KEY"=:B1)
+   9 - access("B_KEY"="B_ID")
+
+
+Statistics
+----------------------------------------------------------
+       1712  recursive calls
+        537  db block gets
+  143271057  consistent gets
+     993090  physical reads
+        188  redo size
+        769  bytes sent via SQL*Net to client
+        519  bytes received via SQL*Net from client
+          2  SQL*Net roundtrips to/from client
+          1  sorts (memory)
+          1  sorts (disk)
+          1  rows processed

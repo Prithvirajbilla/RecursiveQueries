@@ -1,0 +1,73 @@
+SQL> set autotrace on;
+SQL> select * from A1 connect by prior c_key =
+  2     (select c_id from C1 where b_key = (select b_id from B1 where a_key = a_
+id))
+  3     start with a_id = 10;
+
+      A_ID A_NAME               A_DETAILS                 C_KEY
+---------- -------------------- -------------------- ----------
+        10 9av4vdm32p0rpma      wk4n3vbaac8e8sl               9
+         7 glg7cd282m88glo      m3pomnl6qsv6sjc               6
+         4 no7dbix3q1u3qri      npzykv7l7hhqmgd               3
+         1 qmfy10outhpnemt      kfr5jbvhdcugdwk
+
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 3464898918
+
+--------------------------------------------------------------------------------
+
+----------------
+
+| Id  | Operation   | Name | Rows  | Bytes | Cost (%CPU)| Time     |
+
+--------------------------------------------------------------------------------
+
+
+|   0 | SELECT STATEMENT                        |      |    10 |   500 |     4(25)| 00:00:01 |
+
+|*  1 |  FILTER                                 |      |       |       |          |          |
+
+|   2 |   TABLE ACCESS FULL                     | C1   |    10 |   260 |     3 (0)| 00:00:01 |
+
+|*  3 |   TABLE ACCESS FULL                     | B1   |     1 |    26 |     3 (0)| 00:00:01 |
+
+|*  4 |  CONNECT BY NO FILTERING WITH START-WITH|      |       |       |          |          |
+
+|   5 |   TABLE ACCESS FULL                     | A1   |    10 |   500 |     3 (0)| 00:00:01 |
+
+--------------------------------------------------------------------------------
+
+----------------
+
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - filter("B_KEY"= (SELECT "B_ID" FROM "B1" "B1" WHERE "A_KEY"=:B1))
+   3 - filter("A_KEY"=:B1)
+   4 - access( (SELECT "C_ID" FROM "C1" "C1" WHERE "B_KEY"= (SELECT "B_ID" FROM
+"B1"
+
+              "B1" WHERE "A_KEY"=:B1))=PRIOR "A1"."C_KEY")
+       filter("A_ID"=10)
+
+Note
+-----
+   - dynamic sampling used for this statement (level=2)
+
+
+Statistics
+----------------------------------------------------------
+          0  recursive calls
+          0  db block gets
+        147  consistent gets
+          0  physical reads
+          0  redo size
+        936  bytes sent via SQL*Net to client
+        520  bytes received via SQL*Net from client
+          2  SQL*Net roundtrips to/from client
+          2  sorts (memory)
+          0  sorts (disk)
+          4  rows processed
