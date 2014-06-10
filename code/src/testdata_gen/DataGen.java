@@ -1,4 +1,4 @@
-package testdata_gen;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -50,8 +50,8 @@ public class DataGen {
 		Connection connection = null;
 		try
 		{
-			connection = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/benchmark1",
-					"benchmark","benchmark");
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@//infa.cx6pxciausrl.ap-southeast-1.rds.amazonaws.com:1521/ORCL",
+					"prithvirajbilla","Lathamadhukar7");
 			
 		}
 		catch(SQLException e)
@@ -132,6 +132,7 @@ public class DataGen {
 				ppta.setInt(4, i-1);
 				ppta.executeUpdate();
 			}
+			if(i%1000 == 0)
 			System.out.println(i);
 		}
 		
