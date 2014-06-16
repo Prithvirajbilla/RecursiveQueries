@@ -43,8 +43,8 @@ class InsertionThread implements Runnable
 		 * Connect to the server
 		 */
 		String insertA = "insert into A"+N+"(A_ID,A_NAME,A_DETAILS,C_KEY) VALUES (?,?,?,?)";
-		String insertB = "insert into B1"+N+"(B_ID,B_NAME,B_DETAILS,A_KEY) VALUES (?,?,?,?)";
-		String insertC = "insert into C1"+N+"(C_ID,C_NAME,C_DETAILS,B_KEY) VALUES (?,?,?,?)";
+		String insertB = "insert into B"+N+"(B_ID,B_NAME,B_DETAILS,A_KEY) VALUES (?,?,?,?)";
+		String insertC = "insert into C"+N+"(C_ID,C_NAME,C_DETAILS,B_KEY) VALUES (?,?,?,?)";
 
 		try
 		{
