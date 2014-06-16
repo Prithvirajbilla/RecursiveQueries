@@ -22,14 +22,14 @@ class InsertionThread implements Runnable
 {
 	String tb;
 	long f, t;
-	String CONNECTION_URL ="jdbc:oracle:thin:@//localhost:1521/benchmark1";
+/*	String CONNECTION_URL ="jdbc:oracle:thin:@//localhost:1521/benchmark1";
 	String USER_NAME = "benchmark";
 	String PASS = "benchmark";
-	
-/*	static String CONNECTION_URL = "jdbc:oracle:thin:@//infa.cx6pxciausrl.ap-southeast-1.rds.amazonaws.com:1521/ORCL";
+*/	
+	static String CONNECTION_URL = "jdbc:oracle:thin:@//infa.cx6pxciausrl.ap-southeast-1.rds.amazonaws.com:1521/ORCL";
 	static String USER_NAME = "prithvirajbilla";
 	static String PASS ="Lathamadhukar7";
-*/	
+	
 	long N;
 	public InsertionThread(long fron,long to,long n)
 	{
@@ -198,14 +198,14 @@ public class datagen {
 	/**
 	 * @param args
 	 */
-	static String CONNECTION_URL = "jdbc:oracle:thin:@//localhost:1521/benchmark1";
+/*	static String CONNECTION_URL = "jdbc:oracle:thin:@//localhost:1521/benchmark1";
 	static String USER_NAME = "benchmark";
 	static String PASS = "benchmark";
-	
-/*	static String CONNECTION_URL = "jdbc:oracle:thin:@//infa.cx6pxciausrl.ap-southeast-1.rds.amazonaws.com:1521/ORCL";
+*/	
+	static String CONNECTION_URL = "jdbc:oracle:thin:@//infa.cx6pxciausrl.ap-southeast-1.rds.amazonaws.com:1521/ORCL";
 	static String USER_NAME = "prithvirajbilla";
 	static String PASS ="Lathamadhukar7";
-*/	private static PreparedStatement ua;
+	private static PreparedStatement ua;
 	private static PreparedStatement ub;
 	private static PreparedStatement uc;
 	public static void main(String[] args) throws IOException, SQLException, InterruptedException {
@@ -268,33 +268,38 @@ public class datagen {
 		}
 		//now i have to update few columns for the awesomeness sake
 		
-		String updateA = "Update "+tA+" set C_KEY=?";
-		String updateB = "Update "+tB+" set A_KEY=?";
-		String updateC = "update "+tC+" set B_KEY=?";
+		String updateA = "Update "+tA+" set C_KEY=? where A_ID=?";
+		String updateB = "Update "+tB+" set A_KEY=? where B_ID=?";
+		String updateC = "update "+tC+" set B_KEY=? where C_ID=?";
 		es.shutdown();
 		boolean finished = es.awaitTermination(1, TimeUnit.MINUTES);
-		ua = null;
-		ub = null;
-		uc = null;
+		ua = connection.prepareStatement(updateA);
+		ub = connection.prepareStatement(updateB);
+		uc = connection.prepareStatement(updateC);
+		
 		if(finished)
 		{	
 			for(int i =1; i <= num_threads;i++)
 			{
 				int f = (int) ((vi*i) + 1);
-				ua.setInt(1, (int) f);
+				System.out.println(f);
+				ua.setInt(1, (int) f-1);
+				ua.setInt(2,(int)f);
 				ua.executeUpdate();
 			
-				ua.setInt(1, (int) (f+1));
+				ua.setInt(1, (int) f);
+				ua.setInt(2, (int)f+1);
 				ua.executeUpdate();
 	
 				//2nd
-				ub.setInt(1,(int) f);
+				ub.setInt(1,(int) f-1);
+				ub.setInt(2,(int)f);
 				ub.executeUpdate();
 				
 				//3rd
 				
-				uc.setInt(1,(int) f);
-				
+				uc.setInt(1,(int) f-1);
+				uc.setInt(2,(int)f);
 				uc.executeUpdate();
 		
 			}
