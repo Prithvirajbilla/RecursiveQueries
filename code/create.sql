@@ -1,29 +1,29 @@
 
-drop table A100000000 cascade constraints;
-drop table b100000000 cascade constraints;
-drop table c100000000 cascade constraints;
+drop table A100 cascade constraints;
+drop table b100 cascade constraints;
+drop table c100 cascade constraints;
 
-create table A100000000
+create table A100
 (
 	"A_ID" NUMBER PRIMARY KEY,
 	"A_NAME" VARCHAR(20 BYTE),
 	"A_DETAILS" VARCHAR(20 BYTE),
 	"C_KEY" NUMBER
 );
-create table B100000000
+create table B100
 (
 		"B_ID" NUMBER PRIMARY KEY,
 	"B_NAME" VARCHAR(20 BYTE),
 	"B_DETAILS" VARCHAR(20 BYTE),
-	"A_KEY" NUMBER REFERENCES A100000000("A_ID")
+	"A_KEY" NUMBER REFERENCES A100("A_ID")
 );
 
-create table C100000000
+create table C100
 (
 		"C_ID" NUMBER PRIMARY KEY,
 	"C_NAME" VARCHAR(20 BYTE),
 	"C_DETAILS" VARCHAR(20 BYTE),
-	"B_KEY" NUMBER REFERENCES B100000000("B_ID")
+	"B_KEY" NUMBER REFERENCES B100("B_ID")
 );
 
-ALTER TABLE "A100000000" ADD CONSTRAINT "A100000000_FK1" FOREIGN KEY ("C_KEY") REFERENCES "C100000000" ("C_ID");
+ALTER TABLE "A100" ADD CONSTRAINT "A100_FK1" FOREIGN KEY ("C_KEY") REFERENCES "C100" ("C_ID");

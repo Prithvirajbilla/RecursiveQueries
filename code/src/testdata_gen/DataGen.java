@@ -22,14 +22,14 @@ class InsertionThread implements Runnable
 {
 	String tb;
 	long f, t;
-/*	String CONNECTION_URL ="jdbc:oracle:thin:@//localhost:1521/benchmark1";
+	String CONNECTION_URL ="jdbc:oracle:thin:@//localhost:1521/benchmark1";
 	String USER_NAME = "benchmark";
 	String PASS = "benchmark";
-*/	
-	static String CONNECTION_URL = "jdbc:oracle:thin:@//infa.cx6pxciausrl.ap-southeast-1.rds.amazonaws.com:1521/ORCL";
+	
+/*	static String CONNECTION_URL = "jdbc:oracle:thin:@//infa.cx6pxciausrl.ap-southeast-1.rds.amazonaws.com:1521/ORCL";
 	static String USER_NAME = "prithvirajbilla";
 	static String PASS ="Lathamadhukar7";
-	
+*/	
 	long N;
 	public InsertionThread(long fron,long to,long n)
 	{
@@ -198,14 +198,14 @@ public class datagen {
 	/**
 	 * @param args
 	 */
-/*	static String CONNECTION_URL = "jdbc:oracle:thin:@//localhost:1521/benchmark1";
+	static String CONNECTION_URL = "jdbc:oracle:thin:@//localhost:1521/benchmark1";
 	static String USER_NAME = "benchmark";
 	static String PASS = "benchmark";
-*/	
-	static String CONNECTION_URL = "jdbc:oracle:thin:@//infa.cx6pxciausrl.ap-southeast-1.rds.amazonaws.com:1521/ORCL";
+	
+/*	static String CONNECTION_URL = "jdbc:oracle:thin:@//infa.cx6pxciausrl.ap-southeast-1.rds.amazonaws.com:1521/ORCL";
 	static String USER_NAME = "prithvirajbilla";
 	static String PASS ="Lathamadhukar7";
-	private static PreparedStatement ua;
+*/	private static PreparedStatement ua;
 	private static PreparedStatement ub;
 	private static PreparedStatement uc;
 	public static void main(String[] args) throws IOException, SQLException, InterruptedException {
@@ -251,11 +251,11 @@ public class datagen {
 		String tC = "C"+N;
 		
 		PreparedStatement pa = connection.prepareStatement("drop table "+tA+" cascade constraints");
-//		pa.execute();
+		//pa.execute();
 		pa = connection.prepareStatement("drop table "+tB+" cascade constraints");
-//		pa.execute();
+		//pa.execute();
 		pa = connection.prepareStatement("drop table "+tC+" cascade constraints");
-//		pa.execute();
+		//pa.execute();
 		//creating the tables for the awesome 
 		
 		
