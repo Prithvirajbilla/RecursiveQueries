@@ -22,9 +22,14 @@ class InsertionThread implements Runnable
 {
 	String tb;
 	long f, t;
-	String CONNECTION_URL ="jdbc:oracle:thin:@//localhost:1521/benchmark1";
+/*	String CONNECTION_URL ="jdbc:oracle:thin:@//localhost:1521/benchmark1";
 	String USER_NAME = "benchmark";
 	String PASS = "benchmark";
+*/	
+	static String CONNECTION_URL = "jdbc:oracle:thin:@//infa.cx6pxciausrl.ap-southeast-1.rds.amazonaws.com:1521/ORCL";
+	static String USER_NAME = "prithvirajbilla";
+	static String PASS ="Lathamadhukar7";
+	
 	long N;
 	public InsertionThread(long fron,long to,long n)
 	{
@@ -152,7 +157,7 @@ class InsertionThread implements Runnable
 					e.printStackTrace();
 				}
 			}
-			if(i%10000 == 0)
+			if(i%(N/10) == 0)
 			System.out.println(i);
 		}
 	}
@@ -193,9 +198,13 @@ public class datagen {
 	/**
 	 * @param args
 	 */
-	static String CONNECTION_URL = "jdbc:oracle:thin:@//localhost:1521/benchmark1";
+/*	static String CONNECTION_URL = "jdbc:oracle:thin:@//localhost:1521/benchmark1";
 	static String USER_NAME = "benchmark";
 	static String PASS = "benchmark";
+*/	
+	static String CONNECTION_URL = "jdbc:oracle:thin:@//infa.cx6pxciausrl.ap-southeast-1.rds.amazonaws.com:1521/ORCL";
+	static String USER_NAME = "prithvirajbilla";
+	static String PASS ="Lathamadhukar7";
 	private static PreparedStatement ua;
 	private static PreparedStatement ub;
 	private static PreparedStatement uc;
