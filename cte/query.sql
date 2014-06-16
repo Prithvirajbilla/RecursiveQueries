@@ -16,3 +16,6 @@ select a_id from A where c_key in
 -------------
 
 SELECT plan_table_output from table(dbms_xplan.display('plan_table',null,'typical'));
+
+
+select * from A connect by prior 
