@@ -251,11 +251,11 @@ public class datagen {
 		String tC = "C"+N;
 		
 		PreparedStatement pa = connection.prepareStatement("drop table "+tA+" cascade constraints");
-		pa.execute();
+//		pa.execute();
 		pa = connection.prepareStatement("drop table "+tB+" cascade constraints");
-		pa.execute();
+//		pa.execute();
 		pa = connection.prepareStatement("drop table "+tC+" cascade constraints");
-		pa.execute();
+//		pa.execute();
 		//creating the tables for the awesome 
 		
 		
